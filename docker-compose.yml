@@ -1,30 +1,5 @@
 version : '3.8'
-x-var:
-   - &db MONGO_DB=$MONGO_DB
-   - &dbDev MONGO_DB_DEV=$MONGO_DB_DEV
-   - &mongoHost MONGO_HOSTNAME=$MONGO_HOSTNAME
-   - &mongoPort MONGO_PORT=$MONGO_PORT
-   - &mongoInitDb MONGO_INITDB_DATABASE=$MONGO_DB
-   - &mongoAdmin MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
-   - &mongoAdminPwd MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
-   - &mongoUser MONGO_INITDB_USERNAME=$MONGO_INITDB_USERNAME
-   - &mongoUserPwd MONGO_INITDB_PASSWORD=$MONGO_INITDB_PASSWORD
-   
-   - &apiPort API_PORT=$API_PORT
-   - &apiNodeEnv NODE_ENV=$NODE_ENV
-   - &apiName API_NAME=$API_NAME
-   - &apiHost API_HOSTNAME=$API_HOSTNAME
-   - &coinapiKey COINAPI_KEY=$COINAPI_KEY 
-   - &debug DEBUG=$DEBUG
-   - &debugColor DEBUG_COLORS=$DEBUG_COLORS
-   
-   - &frontHost SITE_HOSTNAME=$SITE_HOSTNAME
-   - &frontPort  SITE_PORT=$SITE_PORT
-   - &proxyHost  PROXY_HOSTNAME=$PROXY_HOSTNAME
-   
 
-
-  
 services:
     api-arbitrage:
         restart: unless-stopped
@@ -34,20 +9,20 @@ services:
         ports: #Pour tester l'api directement avec Postman depuis l'hote
             - $API_PORT:$API_PORT
         environment :
-            - *db 
-            - *dbDev
-            - *mongoHost
-            - *mongoPort
-            - *mongoUser
-            - *mongoUserPwd
-            - *apiPort
-            - *apiNodeEnv
-            - *apiName
-            - *coinapiKey
-            - *debug
-            - *debugColor
+            - MONGO_DB=$MONGO_DB
+            - MONGO_DB_DEV=$MONGO_DB_DEV
+            - MONGO_HOSTNAME=$MONGO_HOSTNAME
+            - MONGO_PORT=$MONGO_PORT
+            - MONGO_INITDB_USERNAME=$MONGO_INITDB_USERNAME
+            - MONGO_INITDB_PASSWORD=$MONGO_INITDB_PASSWORD
+            - MONGO_URI=$MONGO_URI
+            - API_PORT=$API_PORT
+            - NODE_ENV=$NODE_ENV
+            - API_NAME=$API_NAME
+            - DEBUG=$DEBUG
+            - DEBUG_COLORS=$DEBUG_COLORS
             - DEBUG_SHOW_HIDDEN=true
-          
+
         command: npm run dev
         networks:
             default:
@@ -58,12 +33,12 @@ services:
         container_name: mongo_arbitrage
         restart: unless-stopped
         environment:
-            - *mongoInitDb
-            - *dbDev
-            - *mongoUser
-            - *mongoUserPwd
-            - *mongoAdmin
-            - *mongoAdminPwd
+            - MONGO_INITDB_DATABASE=$MONGO_DB
+            - MONGO_DB_DEV=$MONGO_DB_DEV
+            - MONGO_INITDB_USERNAME=$MONGO_INITDB_USERNAME
+            - MONGO_INITDB_PASSWORD=$MONGO_INITDB_PASSWORD
+            - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
+            - MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
         ports: #Pour se connecter a la db depuis l'hote avec robot3T
             - 27018:$MONGO_PORT
         volumes:
@@ -80,7 +55,7 @@ services:
         working_dir: /usr/src/app
         depends_on:
             -   api-arbitrage
-        command : ng serve --host 0.0.0.0 --disable-host-check 
+        command : ng serve --host 0.0.0.0 --disable-host-check
         #On utilise "disable-host-check" car le reverse proxy etant mal opti, il se fait bloquer par la sécurité du serveur d'angular
         networks:
             default:
@@ -97,12 +72,12 @@ services:
             - ./reverse-proxy:/etc/nginx/conf.d
         working_dir: /etc/nginx/conf
         environment:
-            - *apiHost
-            - *apiPort
-            - *apiName
-            - *frontHost 
-            - *frontPort
-            - *proxyHost
+            - API_HOSTNAME=$API_HOSTNAME
+            - API_PORT=$API_PORT
+            - API_NAME=$API_NAME
+            - SITE_HOSTNAME=$SITE_HOSTNAME
+            - SITE_PORT=$SITE_PORT
+            - PROXY_HOSTNAME=$PROXY_HOSTNAME
         ports:
             - $HOST_PORT:80
         command: /bin/bash -c "envsubst < /etc/nginx/conf.d/reverse_proxy.conf.template > /etc/nginx/conf.d/reverse_proxy.conf && nginx -g 'daemon off;'"
