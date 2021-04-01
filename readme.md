@@ -1,5 +1,5 @@
-# TEST ENV docker > 3.4 : 
-- lauch the test
+# TEST ENV docker >= 3.4 : 
+- Launch the test
 ```sh 
 $ make test
 ```
@@ -8,7 +8,7 @@ $ make test
 $ make reset-test
 ```
 
-# DEV ENV docker > 3.4 : 
+# DEV ENV docker >= 3.4 : 
 - make dev env from project
 ```sh
 $ git clone git@github.com:enzocorp/front-admin-pannel.git
@@ -43,7 +43,7 @@ $ make reset
 - MONGO_DB= {string}
 - MONGO_URI= {number}
 
-(Only for locals DEv and Tests) 
+(Useful **only on local env** Dev and Tests) 
 - MONGO_HOSTNAME= {string} (pour le DNS docker)
 - MONGO_DB_DEV= {string}
 - MONGO_INITDB_USERNAME= {string} (user readwrite)
