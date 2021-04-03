@@ -37,17 +37,18 @@ $ make reset
 - NODE_ENV= "development" | "test" | "production"
 
 ### ---Base de données---
-
-- MONGO_INITDB_ROOT_USERNAME= {string} (user superadmin)
-- MONGO_INITDB_ROOT_PASSWORD= {string} (pwd superadmin)
-- MONGO_DB= {string}
-- MONGO_URI= {number}
-
-(Useful **only on local env** Dev and Tests) 
-- MONGO_HOSTNAME= {string} (pour le DNS docker)
-- MONGO_DB_DEV= {string}
 - MONGO_INITDB_USERNAME= {string} (user readwrite)
 - MONGO_INITDB_PASSWORD= {string} (pwd user readwrite)
+- MONGO_DB= {string}
+
+(Useful **only on prod env**) 
+- MONGO_URI= {string}
+
+(Useful **only on local env** Dev or Tests) 
+- MONGO_HOSTNAME= {string} (pour le DNS docker)
+- MONGO_DB_DEV= {string}
+- MONGO_INITDB_ROOT_USERNAME= {string} (user superadmin)
+- MONGO_INITDB_ROOT_PASSWORD= {string} (pwd superadmin)
 - MONGO_PORT= {number}
 
 ### ---Debuger npm---
