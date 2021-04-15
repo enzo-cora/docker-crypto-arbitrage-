@@ -39,20 +39,51 @@ $ make reset
 ### ---Base de données---
 - MONGO_INITDB_USERNAME= {string} (user readwrite)
 - MONGO_INITDB_PASSWORD= {string} (pwd user readwrite)
-- MONGO_DB= {string}
-
-(Useful **only on prod env**) 
-- MONGO_URI= {string}
+- MONGO_DB= {string} (working database)
+- MONGO_URI= {string} (if using "SV" DNS )
+- MONGO_HOSTNAME= {string} (if using "A" classic DNS)
+- MONGO_PORT= {number} (if using "A" classic DNS )
 
 (Useful **only on local env** Dev or Tests) 
-- MONGO_HOSTNAME= {string} (pour le DNS docker)
 - MONGO_DB_DEV= {string}
 - MONGO_INITDB_ROOT_USERNAME= {string} (user superadmin)
 - MONGO_INITDB_ROOT_PASSWORD= {string} (pwd superadmin)
-- MONGO_PORT= {number}
+
 
 ### ---Debuger npm---
 - DEBUG= "api:*,front:*" | ""  (permet d'activer ou desactiver le debuger du front et de l'api) 
 - DEBUG_COLORS=true
-- DEBUG_SHOW_HIDDEN=true
+
+# ENV EXEMPLE : 
+
+```.env
+# ---Paremetre de connexion sur l'hote---
+HOST_PORT=80
+PROXY_HOSTNAME=localhost
+
+# ---Site web---
+SITE_HOSTNAME=angular
+SITE_PORT=4200
+
+# ---Api---
+API_NAME=api1
+API_PORT=3000
+API_HOSTNAME=api_node
+NODE_ENV=development 
+
+# ---Base de données---
+MONGO_HOSTNAME=mongohost
+MONGO_PORT=27017
+MONGO_INITDB_ROOT_USERNAME=admin
+MONGO_INITDB_ROOT_PASSWORD=adminpwd
+MONGO_INITDB_USERNAME=enzo
+MONGO_INITDB_PASSWORD=enzopwd
+MONGO_DB=arbitrage-db
+MONGO_DB_DEV=dev-arbitrage-db
+
+
+# ---Debuger npm ---
+DEBUG=api:*,front:*,infos:*
+DEBUG_COLORS=true
+```
 
