@@ -8,6 +8,16 @@ $ make test
 $ make reset-test
 ```
 
+# PROD ENV docker >= 3.4 : 
+- Launch the test
+```sh 
+$ make prod
+```
+- remove all images, volumes, containers created by "make test"
+```sh 
+$ make reset-prod
+```
+
 # DEV ENV docker >= 3.4 : 
 - make dev env from project
 ```sh
@@ -18,7 +28,7 @@ $ make dev
 ```
 - remove all images, volumes, containers created by "make dev"
 ```sh 
-$ make reset
+$ make reset-dev
 ```
 
 # ENV VARIABLES
