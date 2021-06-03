@@ -20,3 +20,8 @@ reset-test:
 reset-prod:
 	docker-compose -f prod.docker-compose.yml down -v --rmi "local"
 
+send-prod:
+	docker build -f prod.Dockerfile -t enzo13/api-arbitrage-p:3.0.1 ./api-filter-symbols
+	docker build -f prod.Dockerfile -t enzo13/front-arbitrage-p:3.0 ./front-admin-pannel
+	docker push enzo13/api-arbitrage-p:3.0.1
+	docker push enzo13/front-arbitrage-p:3.0

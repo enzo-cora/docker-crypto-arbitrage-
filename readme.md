@@ -9,7 +9,7 @@ $ make reset-test
 ```
 
 # PROD ENV docker >= 3.4 : 
-- Launch the test
+- Launch prod env
 ```sh 
 $ make prod
 ```
@@ -17,6 +17,8 @@ $ make prod
 ```sh 
 $ make reset-prod
 ```
+
+()
 
 # DEV ENV docker >= 3.4 : 
 - make dev env from project
